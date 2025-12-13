@@ -70,6 +70,10 @@ class deepConvNet(nn.Module):
         return x, f, 0
 
 class EEGSimpleConv(torch.nn.Module):
+    """
+    A Strong and Simple Deep Learning Baseline for BCI MI Decoding
+    Algorithm from https://arxiv.org/abs/2309.07159
+    """
     def __init__(self, fm, n_convs, resampling, kernel_size,n_chan,n_classes,sfreq,n_subjects=None,isProj=False, *args, **kwargs):
         super(EEGSimpleConv, self).__init__()
         #self.pool = torch.nn.AvgPool1d(init_pool)

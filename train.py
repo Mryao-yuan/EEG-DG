@@ -217,7 +217,7 @@ if __name__ == '__main__':
     # ho(datasetId=0, network='B7', batchSize=32, feature=32, subTorun=[0, 9], dropoutP=0., c=0.5, isProj=True,
     #    tradeOff=1, tradeOff2=0.1, maxEpochs=200, sma=100, algorithm='scl', ps='', )
     # test coco_scl eeg_dg 
-    ho(datasetId=3, network='B73', batchSize=52, feature=32, subTorun=[0, 14], dropoutP=0.3, c=2, isProj=True,
+    ho(datasetId=3, network='EEGSimpleConv', batchSize=52, feature=32, subTorun=[0, 14], dropoutP=0.3, c=2, isProj=True,
        tradeOff=0.1, tradeOff2=0.1, maxEpochs=100, sma=100, algorithm='scl', ps='', )
 
     # ho(datasetId=1, network='B71', batchSize=212, feature=32, subTorun=[0, 54], dropoutP=0, c=0.5, isProj=True,
