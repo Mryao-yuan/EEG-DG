@@ -1,0 +1,16 @@
+# data
+dataset/
+data/
+
+# outputs
+output/
+viz_output/
+checkpoints/
+logs/
+
+# python
+__pycache__/
+*.pyc
+
+# notebooks
+.ipynb_checkpoints/
