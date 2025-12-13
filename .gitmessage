@@ -1,0 +1,16 @@
+# <type>: <short summary in present tense>
+#
+# Optional body:
+# - why this change is needed
+# - what experiment it corresponds to
+#
+# =========================
+# Commit Type Guide
+#
+# exp:      experiment / ablation / parameter tuning
+# feat:     new feature or confirmed method
+# fix:      bug fix
+# refactor: code refactor without changing results
+# docs:     documentation only
+# chore:    maintenance, init, config
+# =========================

@@ -31,6 +31,7 @@ root = '/home/yaoyuan/EEG/Datasets'
 def ho(datasetId=None, network=None, numEpochs=200, maxEpochs=200, batchSize=32, feature=32, subTorun=None, ps='',
        dropoutP=0., filterType='cheby2', c=0.5, tradeOff=0., tradeOff2=0., tradeOff3=0., tradeOff4=10, sma=100,
        isProj=True, algorithm='ce'):
+    root = '/home/yaoyuan/Dataset' if datasetId == 0 else '/home/zhyzz/research/Data'
     # define datasets
     datasets = ['bci42a', 'korea', 'bci42b', 'hgd', 'gist', 'bci32a', 'physionet', 'physionet2']
     # parameters initialization
@@ -217,8 +218,8 @@ if __name__ == '__main__':
     # ho(datasetId=0, network='B7', batchSize=32, feature=32, subTorun=[0, 9], dropoutP=0., c=0.5, isProj=True,
     #    tradeOff=1, tradeOff2=0.1, maxEpochs=200, sma=100, algorithm='scl', ps='', )
     # test coco_scl eeg_dg 
-    ho(datasetId=0, network='B7', batchSize=32, feature=32, subTorun=[0, 9], dropoutP=0., c=0.5, isProj=True,
-       tradeOff=1, tradeOff2=0.1, maxEpochs=200, sma=100, algorithm='coco_scl', ps='', )
+    ho(datasetId=3, network='B73', batchSize=52, feature=32, subTorun=[0, 14], dropoutP=0.3, c=2, isProj=True,
+       tradeOff=0.1, tradeOff2=0.1, maxEpochs=200, sma=100, algorithm='scl', ps='', )
 
     # ho(datasetId=1, network='B71', batchSize=212, feature=32, subTorun=[0, 54], dropoutP=0, c=0.5, isProj=True,
     #    tradeOff=0.1, tradeOff2=0.01, sma=150, tradeOff4=20, maxEpochs=50, algorithm='smcldgn_mc', ps='')
