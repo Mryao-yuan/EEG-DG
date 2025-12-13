@@ -39,11 +39,10 @@ def ho(datasetId=None, network=None, numEpochs=200, maxEpochs=200, batchSize=32,
     config['randSeed'] = 19960822
     config['preloadData'] = False
     config['network'] = network
-    config['modelArguments'] = getModelArguments(datasetId=datasetId, dropoutP=dropoutP, feature=feature,
-                                                 c=c, isProj=isProj)
-    config['baseModelArugments'] = getBaseModelArguments(datasetId=datasetId, batchSize=batchSize,
-                                                         tradeOff=tradeOff,
-                                                         tradeOff2=tradeOff2, tradeOff3=tradeOff3,
+    config['modelArguments'] = getModelArguments(network=network,datasetId=datasetId, 
+                                                 dropoutP=dropoutP, feature=feature,c=c, isProj=isProj)
+    config['baseModelArugments'] = getBaseModelArguments( datasetId=datasetId, batchSize=batchSize,
+                                                         tradeOff=tradeOff,tradeOff2=tradeOff2, tradeOff3=tradeOff3,
                                                          tradeOff4=tradeOff4, algorithm=algorithm)
 
     # Training related details
@@ -209,8 +208,8 @@ def ho(datasetId=None, network=None, numEpochs=200, maxEpochs=200, batchSize=32,
 if __name__ == '__main__':
     
     # algorithms ['ce', 'coral', 'scl', 'smcldgn', 'smcldgn_mc','mixup', 'mmd', 'dann', 'irm', 'mldg','EEG_DG']
-    # dataset [0:bci42a, 1:korea, 2:bci42b, 3:hgd, 4:gist, 5:bci32a, 6:physionet, 7:physionet2]
-    # betwork = ['eegNet',]
+    # dataset [0:bci42a, 1:OpenBMI, 2:bci42b, 3:hgd, 4:gist, 5:bci32a, 6:physionet, 7:physionet2]
+    # betwork = ['eegNet','B7','B71','B73','B74','B76','B77','simple']
     
     # ho(datasetId=0, network='B7', batchSize=32, feature=32, subTorun=[0, 9], dropoutP=0., c=0.5, isProj=True,
     #    tradeOff=1, tradeOff2=0.1, maxEpochs=200, sma=100, algorithm='smcldgn', ps='', )
@@ -219,7 +218,7 @@ if __name__ == '__main__':
     #    tradeOff=1, tradeOff2=0.1, maxEpochs=200, sma=100, algorithm='scl', ps='', )
     # test coco_scl eeg_dg 
     ho(datasetId=3, network='B73', batchSize=52, feature=32, subTorun=[0, 14], dropoutP=0.3, c=2, isProj=True,
-       tradeOff=0.1, tradeOff2=0.1, maxEpochs=200, sma=100, algorithm='scl', ps='', )
+       tradeOff=0.1, tradeOff2=0.1, maxEpochs=100, sma=100, algorithm='scl', ps='', )
 
     # ho(datasetId=1, network='B71', batchSize=212, feature=32, subTorun=[0, 54], dropoutP=0, c=0.5, isProj=True,
     #    tradeOff=0.1, tradeOff2=0.01, sma=150, tradeOff4=20, maxEpochs=50, algorithm='smcldgn_mc', ps='')
