@@ -472,10 +472,11 @@ class baseModel:
             with torch.enable_grad():
                 optimizer.zero_grad()
 
-                x = d[0].to(self.device).permute(0, 3, 1, 2)
+                x = d[0].to(self.device).permute(0, 3, 1, 2) # b,banks,c,t
+                # for eegnet
+                x = torch.mean(x, dim=1, keepdim=True)
                 labels = d[1].type(torch.LongTensor).to(self.device)
                 logits, _, _ = self.net.update(x)
-
                 loss = F.cross_entropy(logits, labels)
                 # backward pass
                 loss.backward()
@@ -1041,7 +1042,7 @@ class baseModel:
             for d in dataLoader:
                 inputs = d[0].permute(0, 3, 1, 2).to(self.device)
                 labels = d[1].type(torch.LongTensor).to(self.device)
-                preds, _, _ = self.net.predict(d[0].permute(0, 3, 1, 2).to(self.device))
+                preds, _, _ = self.net.predict(inputs)
                 n_pred = preds.shape[0]
                 n_labels = labels.shape[0]
                 labels = labels if n_pred == n_labels else labels.repeat_interleave(n_pred // n_labels,dim=0)

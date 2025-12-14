@@ -171,6 +171,8 @@ class eegNet(nn.Module):
         self.lastLayer = self.lastBlock(self.F2, nClass, (1, self.fSize[1]))
 
     def forward(self, x):
+        if x.shape[1] != 1:
+            x = torch.mean(x, dim=1, keepdim=True)  # for eegnet, average over bands
         f = self.firstBlocks(x)
         x = self.lastLayer(f)
         x = torch.squeeze(x, 3)

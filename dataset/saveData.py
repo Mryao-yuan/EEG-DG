@@ -637,8 +637,6 @@ def pythonToMultiviewPython(datasetPath, savePath,
 
 
 
-def python
-
 def trasnformAndSave(datasetPath, savePath, transform=None):
     if transform is None:
         return -1

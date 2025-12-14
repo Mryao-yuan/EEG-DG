@@ -46,11 +46,11 @@ def ho(datasetId=None, network=None, numEpochs=200, maxEpochs=200, batchSize=32,
                                                          tradeOff=tradeOff,tradeOff2=tradeOff2, tradeOff3=tradeOff3,
                                                          tradeOff4=tradeOff4, algorithm=algorithm)
 
-    # Training related details
+    # Training related details   'sampler': 'RandomSampler'
     config['modelTrainArguments'] = {
         'stopCondi': {'c': {'Or': {'c1': {'MaxEpoch': {'maxEpochs': maxEpochs, 'varName': 'epoch'}},
                                    'c2': {'NoDecrease': {'numEpochs': numEpochs, 'varName': 'valInacc'}}}}},
-        'sampler': 'RandomSampler', 'loadBestModel': True, 'bestVarToCheck': 'valInacc', 'lr': 1e-3}
+        'sampler': None, 'loadBestModel': True, 'bestVarToCheck': 'valInacc', 'lr': 1e-3}
     
     modeInFol = 'multiviewPython' 
     config['inDataPath'] = os.path.join(root,datasets[datasetId], modeInFol)
@@ -219,10 +219,13 @@ if __name__ == '__main__':
     #    tradeOff=1, tradeOff2=0.1, maxEpochs=200, sma=100, algorithm='scl', ps='', )
     
     # baseline simple_scl 42a
-    ho(datasetId=0, network='EEGSimpleConv', batchSize=32, feature=32, subTorun=[0, 9],dropoutP=0., c=0.5, isProj=True,
-       tradeOff=1, tradeOff2=0.1, maxEpochs=200, sma=100, algorithm='scl', ps='', )
+    # ho(datasetId=0, network='EEGSimpleConv', batchSize=32, feature=32, subTorun=[0, 9],dropoutP=0., c=0.5, isProj=True,
+    #    tradeOff=1, tradeOff2=0.1, maxEpochs=200, sma=100, algorithm='ce', ps='', )
+    # eegnet 42a ce
+    ho(datasetId=0, network='eegNet', batchSize=32, feature=32, subTorun=[0, 9],dropoutP=0.25, c=0.5, isProj=True,
+       tradeOff=1, tradeOff2=0.1, maxEpochs=200, sma=100, algorithm='ce', ps='', )
 
-    # ho(datasetId=1, network='B71', batchSize=212, feature=32, subTorun=[0, 54], dropoutP=0, c=0.5, isProj=True,
+    # ho(datasetId=1, network='B71', batchceSize=212, feature=32, subTorun=[0, 54], dropoutP=0, c=0.5, isProj=True,
     #    tradeOff=0.1, tradeOff2=0.01, sma=150, tradeOff4=20, maxEpochs=50, algorithm='smcldgn_mc', ps='')
 
     # ho(datasetId=2, network='B7', batchSize=32, feature=32, subTorun=[0, 9], dropoutP=0., c=0.5, isProj=True,

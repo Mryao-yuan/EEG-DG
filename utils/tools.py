@@ -205,32 +205,7 @@ def get_transform(filtBank=[[4, 8], [8, 12], [12, 16], [16, 20], [20, 24], [24, 
 
 def getModelArguments(network,datasetId, dropoutP=0., feature=32, c=0.5, isProj=False):
     argument = {}
-    if 'B7' in network:
-        if datasetId == 0:  # bci42a
-            argument = {'inputSize': (9, 22, 1000), 'dropoutP': dropoutP,
-                        'm': feature, 'c': c, 'nClass': 4, 'isProj': isProj}
-        elif datasetId == 1:  # openbmi
-            argument = {'inputSize': (9, 62, 1000), 'dropoutP': dropoutP,
-                        'm': feature, 'c': c, 'nClass': 2, 'isProj': isProj}
-        elif datasetId == 2:  # bci42b
-            argument = {'inputSize': (9, 3, 1000), 'dropoutP': dropoutP,
-                        'm': feature, 'c': c, 'nClass': 2, 'isProj': isProj}
-        elif datasetId == 3:  # hgd
-            argument = {'inputSize': (9, 44, 1000), 'dropoutP': dropoutP,
-                        'm': feature, 'c': c, 'nClass': 4, 'isProj': isProj}
-        elif datasetId == 4:  # gist
-            argument = {'inputSize': (9, 64, 750), 'dropoutP': dropoutP,
-                        'm': feature, 'c': c, 'nClass': 2, 'isProj': isProj}
-        elif datasetId == 5:  # bci3
-            argument = {'inputSize': (9, 49, 300), 'dropoutP': dropoutP,
-                        'm': feature, 'c': c, 'nClass': 2, 'isProj': isProj}
-        elif datasetId == 6:  # physionet4
-            argument = {'inputSize': (9, 64, 480), 'dropoutP': dropoutP,
-                        'm': feature, 'c': c, 'nClass': 4, 'isProj': isProj}
-        elif datasetId == 7:  # physionet2
-            argument = {'inputSize': (9, 64, 480), 'dropoutP': dropoutP,
-                        'm': feature, 'c': c, 'nClass': 2, 'isProj': isProj}
-    elif 'EEGSimple' in network:
+    if 'EEGSimple' in network:
         if datasetId == 0:  # bci42a
             argument = {'n_chan': 22, 'n_classes': 4, 'sfreq': 250,
                         'resampling': 70, 'fm':  feature, 'n_convs': 4,
@@ -256,7 +231,30 @@ def getModelArguments(network,datasetId, dropoutP=0., feature=32, c=0.5, isProj=
                         'resampling': 250, 'fm': feature, 'n_convs': 4,
                         'kernel_size': 64, 'dropoutP': dropoutP, 'isProj': isProj}
     else:
-        raise NotImplementedError('Model arguments not implemented for this network and dataset')
+        if datasetId == 0:  # bci42a
+            argument = {'inputSize': (9, 22, 1000), 'dropoutP': dropoutP,
+                        'm': feature, 'c': c, 'nClass': 4, 'isProj': isProj}
+        elif datasetId == 1:  # openbmi
+            argument = {'inputSize': (9, 62, 1000), 'dropoutP': dropoutP,
+                        'm': feature, 'c': c, 'nClass': 2, 'isProj': isProj}
+        elif datasetId == 2:  # bci42b
+            argument = {'inputSize': (9, 3, 1000), 'dropoutP': dropoutP,
+                        'm': feature, 'c': c, 'nClass': 2, 'isProj': isProj}
+        elif datasetId == 3:  # hgd
+            argument = {'inputSize': (9, 44, 1000), 'dropoutP': dropoutP,
+                        'm': feature, 'c': c, 'nClass': 4, 'isProj': isProj}
+        elif datasetId == 4:  # gist
+            argument = {'inputSize': (9, 64, 750), 'dropoutP': dropoutP,
+                        'm': feature, 'c': c, 'nClass': 2, 'isProj': isProj}
+        elif datasetId == 5:  # bci3
+            argument = {'inputSize': (9, 49, 300), 'dropoutP': dropoutP,
+                        'm': feature, 'c': c, 'nClass': 2, 'isProj': isProj}
+        elif datasetId == 6:  # physionet4
+            argument = {'inputSize': (9, 64, 480), 'dropoutP': dropoutP,
+                        'm': feature, 'c': c, 'nClass': 4, 'isProj': isProj}
+        elif datasetId == 7:  # physionet2
+            argument = {'inputSize': (9, 64, 480), 'dropoutP': dropoutP,
+                        'm': feature, 'c': c, 'nClass': 2, 'isProj': isProj}
     return argument
 
 
