@@ -230,10 +230,10 @@ def getModelArguments(network,datasetId, dropoutP=0., feature=32, c=0.5, isProj=
         elif datasetId == 7:  # physionet2
             argument = {'inputSize': (9, 64, 480), 'dropoutP': dropoutP,
                         'm': feature, 'c': c, 'nClass': 2, 'isProj': isProj}
-    elif 'simple' in network:
+    elif 'EEGSimple' in network:
         if datasetId == 0:  # bci42a
             argument = {'n_chan': 22, 'n_classes': 4, 'sfreq': 250,
-                        'resampling': 250, 'fm': feature, 'n_convs': 4,
+                        'resampling': 70, 'fm':  feature, 'n_convs': 4,
                         'kernel_size': 64, 'dropoutP': dropoutP, 'isProj': isProj}
         elif datasetId == 1:  # openbmi
             argument = {'n_chan': 62, 'n_classes': 2, 'sfreq': 250,
@@ -255,12 +255,14 @@ def getModelArguments(network,datasetId, dropoutP=0., feature=32, c=0.5, isProj=
             argument = {'n_chan': 49, 'n_classes': 2, 'sfreq': 250,
                         'resampling': 250, 'fm': feature, 'n_convs': 4,
                         'kernel_size': 64, 'dropoutP': dropoutP, 'isProj': isProj}
-        elif dataset
+    else:
+        raise NotImplementedError('Model arguments not implemented for this network and dataset')
     return argument
 
 
-def getBaseModelArguments(datasetId, batchSize=32, tradeOff=0., tradeOff2=0., tradeOff3=0.,
+def getBaseModelArguments(network,datasetId, batchSize=32, tradeOff=0., tradeOff2=0., tradeOff3=0.,
                           tradeOff4=0., algorithm='ce'):
+    network = network
     ndomainList = [9, 54, 9, 14, 50, 5, 109, 109]
     classesList = [4, 2, 2, 4, 2, 2, 4, 2]
     argument = {'batchSize': batchSize, 'ndomain': ndomainList[datasetId],

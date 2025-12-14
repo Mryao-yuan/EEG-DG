@@ -636,6 +636,9 @@ def pythonToMultiviewPython(datasetPath, savePath,
     trasnformAndSave(datasetPath, savePath, transform=filterTransform)
 
 
+
+def python
+
 def trasnformAndSave(datasetPath, savePath, transform=None):
     if transform is None:
         return -1
@@ -695,7 +698,7 @@ def fetchData(dataFolder, datasetId=0, filterTransform=None):
     oDataFolder = 'originalData'
     # 已清洗、已分段（Epoched）、已标准化 .mat 格式代码（每subject一个文件）
     rawMatFolder = 'rawMat' 
-    # 每trail 一个.dat 文件
+    # 每 trail 一个.dat 文件
     # dataLabels.csv，记录了id、file_name,label,subjetc, session
     rawPythonFolder = 'rawPython'
     # 变换和滤波后数据，最终送入网络的 .dat 文件

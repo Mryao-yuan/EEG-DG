@@ -31,7 +31,7 @@ root = '/home/yaoyuan/EEG/Datasets'
 def ho(datasetId=None, network=None, numEpochs=200, maxEpochs=200, batchSize=32, feature=32, subTorun=None, ps='',
        dropoutP=0., filterType='cheby2', c=0.5, tradeOff=0., tradeOff2=0., tradeOff3=0., tradeOff4=10, sma=100,
        isProj=True, algorithm='ce'):
-    root = '/home/yaoyuan/Dataset' if datasetId == 0 else '/home/zhyzz/research/Data'
+    # root = '/home/yaoyuan/Dataset' if datasetId == 0 else '/home/zhyzz/research/Data'
     # define datasets
     datasets = ['bci42a', 'korea', 'bci42b', 'hgd', 'gist', 'bci32a', 'physionet', 'physionet2']
     # parameters initialization
@@ -39,9 +39,10 @@ def ho(datasetId=None, network=None, numEpochs=200, maxEpochs=200, batchSize=32,
     config['randSeed'] = 19960822
     config['preloadData'] = False
     config['network'] = network
+    network_name = network
     config['modelArguments'] = getModelArguments(network=network,datasetId=datasetId, 
                                                  dropoutP=dropoutP, feature=feature,c=c, isProj=isProj)
-    config['baseModelArugments'] = getBaseModelArguments( datasetId=datasetId, batchSize=batchSize,
+    config['baseModelArugments'] = getBaseModelArguments(network,datasetId=datasetId, batchSize=batchSize,
                                                          tradeOff=tradeOff,tradeOff2=tradeOff2, tradeOff3=tradeOff3,
                                                          tradeOff4=tradeOff4, algorithm=algorithm)
 
@@ -183,7 +184,7 @@ def ho(datasetId=None, network=None, numEpochs=200, maxEpochs=200, batchSize=32,
         net_ = ERM_SMA(net, start=sma)
 
         outPathSub = os.path.join(config['outPath'], 'sub' + str(iSub))
-        model = baseModel(net=net_, resultsSavePath=outPathSub, **config['baseModelArugments'])
+        model = baseModel(net=net_,network=network_name, resultsSavePath=outPathSub, **config['baseModelArugments'])
         start = time.time()
         model.train(trainData, valData, testData, **config['modelTrainArguments'], )
 
@@ -216,9 +217,10 @@ if __name__ == '__main__':
     # test scl algorithm
     # ho(datasetId=0, network='B7', batchSize=32, feature=32, subTorun=[0, 9], dropoutP=0., c=0.5, isProj=True,
     #    tradeOff=1, tradeOff2=0.1, maxEpochs=200, sma=100, algorithm='scl', ps='', )
-    # test coco_scl eeg_dg 
-    ho(datasetId=3, network='EEGSimpleConv', batchSize=52, feature=32, subTorun=[0, 14], dropoutP=0.3, c=2, isProj=True,
-       tradeOff=0.1, tradeOff2=0.1, maxEpochs=100, sma=100, algorithm='scl', ps='', )
+    
+    # baseline simple_scl 42a
+    ho(datasetId=0, network='EEGSimpleConv', batchSize=32, feature=32, subTorun=[0, 9],dropoutP=0., c=0.5, isProj=True,
+       tradeOff=1, tradeOff2=0.1, maxEpochs=200, sma=100, algorithm='scl', ps='', )
 
     # ho(datasetId=1, network='B71', batchSize=212, feature=32, subTorun=[0, 54], dropoutP=0, c=0.5, isProj=True,
     #    tradeOff=0.1, tradeOff2=0.01, sma=150, tradeOff4=20, maxEpochs=50, algorithm='smcldgn_mc', ps='')

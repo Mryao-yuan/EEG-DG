@@ -111,6 +111,10 @@ class EEGSimpleConv(torch.nn.Module):
             self.projection = nn.Identity()
         
     def forward(self, x):
+        if x.dim() == 4:
+            batch_size, subjects, channels, time = x.shape
+            # 合并前两维
+            x = x.reshape(batch_size * subjects, channels, time)
         y = torch.relu(self.bn(self.conv(self.rs(x.contiguous()))))
         for seq in self.blocks:
             y = seq(y)

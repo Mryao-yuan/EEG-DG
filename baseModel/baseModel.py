@@ -40,6 +40,7 @@ class baseModel:
     def __init__(
             self,
             net,
+            network,
             resultsSavePath=None,
             seed=961102,
             setRng=True,
@@ -54,6 +55,7 @@ class baseModel:
             classes=4,
             algorithm='ce',
             coco_config=None):
+        self.network = network
         self.seed = seed
         self.preferedDevice = preferedDevice
         self.batchSize = batchSize
@@ -518,8 +520,11 @@ class baseModel:
                     all_x = sorted_x
                     all_y = sorted_y
                     # all_d = sorted_d
-
+                
+                all_y =  all_y if 'EEGSimpleConv' not in self.network else torch.repeat_interleave(all_y, repeats=all_x.shape[1], dim=0)
+                
                 output, _, proj = self.net.update(all_x)
+
                 loss_ce = F.cross_entropy(output, all_y)
                 # shuffle
                 mix1 = torch.zeros_like(proj)
@@ -1034,15 +1039,20 @@ class baseModel:
         with torch.no_grad():
             # iterate over all the data
             for d in dataLoader:
+                inputs = d[0].permute(0, 3, 1, 2).to(self.device)
+                labels = d[1].type(torch.LongTensor).to(self.device)
                 preds, _, _ = self.net.predict(d[0].permute(0, 3, 1, 2).to(self.device))
-                loss += F.cross_entropy(preds, d[1].type(torch.LongTensor).to(self.device)).data
+                n_pred = preds.shape[0]
+                n_labels = labels.shape[0]
+                labels = labels if n_pred == n_labels else labels.repeat_interleave(n_pred // n_labels,dim=0)
+                loss += F.cross_entropy(preds, labels).item()
 
                 # Convert the output of soft-max to class label
-                _, preds = torch.max(preds, 1)
-                predicted.extend(preds.data.tolist())
-                actual.extend(d[1].tolist())
+                _, preds_ = torch.max(preds, 1)
+                predicted.extend(preds_.cpu().tolist())
+                actual.extend(labels.cpu().tolist())
 
-        return predicted, actual, loss.clone().detach().item() / len(dataLoader)
+        return predicted, actual, loss / len(dataLoader)
 
     def online(self, data):
 
